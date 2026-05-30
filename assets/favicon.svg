@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Amit Chouhan">
+  <rect width="32" height="32" fill="#F3EFE0"/>
+  <rect x="3.5" y="3.5" width="25" height="25" fill="#7FEFBD" stroke="#000" stroke-width="3"/>
+  <path d="M16 8 L23 24 H19.2 L18 21 H14 L12.8 24 H9 Z M15 18 H17 L16 15 Z" fill="#000"/>
+</svg>

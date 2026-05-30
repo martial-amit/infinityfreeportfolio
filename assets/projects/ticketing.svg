@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="IT Ticketing System preview placeholder">
+  <rect width="480" height="300" fill="#F3EFE0"/>
+  <rect x="24" y="28" width="432" height="248" fill="#FFFFFF" stroke="#000" stroke-width="4"/>
+  <rect x="24" y="28" width="432" height="40" fill="#7FEFBD" stroke="#000" stroke-width="4"/>
+  <circle cx="48" cy="48" r="6"/><circle cx="72" cy="48" r="6"/><circle cx="96" cy="48" r="6"/>
+  <text x="440" y="54" font-family="sans-serif" font-weight="700" font-size="16" text-anchor="end" fill="#000">IT Ticketing System</text>
+  <rect x="48" y="92" width="120" height="56" fill="#F3EFE0" stroke="#000" stroke-width="3"/>
+  <rect x="184" y="92" width="120" height="56" fill="#F3EFE0" stroke="#000" stroke-width="3"/>
+  <rect x="320" y="92" width="112" height="56" fill="#F3EFE0" stroke="#000" stroke-width="3"/>
+  <rect x="48" y="166" width="384" height="86" fill="#7FEFBD" stroke="#000" stroke-width="3"/>
+  <polyline points="64,236 112,206 160,220 208,190 256,212 304,186 352,208 416,184" fill="none" stroke="#000" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="240" y="292" font-family="monospace" font-size="11" text-anchor="middle" fill="#000" opacity="0.55">SCREENSHOT · Help-Desk</text>
+</svg>

@@ -1,0 +1,39 @@
+# ============================================================================
+# Amit Chouhan portfolio — Apache config (InfinityFree compatible)
+# ============================================================================
+
+# Custom neubrutalism 404 page
+ErrorDocument 404 /404.html
+
+# Default document
+DirectoryIndex index.html
+
+# ---- Gzip compression ------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+    application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---- Cache static assets ---------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css              "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType image/svg+xml         "access plus 1 month"
+  ExpiresByType image/webp            "access plus 1 month"
+  ExpiresByType image/png             "access plus 1 month"
+  ExpiresByType image/jpeg            "access plus 1 month"
+  ExpiresByType image/x-icon          "access plus 1 month"
+  ExpiresByType application/pdf       "access plus 1 month"
+</IfModule>
+
+# ---- Small security niceties ----------------------------------------------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block access to this file
+<Files ".htaccess">
+  Require all denied
+</Files>

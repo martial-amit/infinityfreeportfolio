@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page not found · Amit Chouhan</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" />
+  <style>
+    :root { --black:#000; --cream:#F3EFE0; --mint:#7FEFBD; }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      min-height: 100dvh; display: grid; place-items: center; padding: 2rem; text-align: center;
+      background: var(--cream); color: var(--black);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background-image:
+        linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .box { background:#fff; border:3px solid #000; box-shadow:8px 8px 0 #000; padding:clamp(2rem,6vw,3.5rem); max-width:560px; display:grid; gap:1.25rem; justify-items:center; }
+    .tag { font-family:'Space Mono',monospace; font-weight:700; font-size:.78rem; letter-spacing:.15em; background:var(--mint); border:2px solid #000; padding:.2rem .6rem; }
+    h1 { font-size:clamp(5rem,28vw,11rem); line-height:.85; letter-spacing:-.05em; }
+    h1 span { color:transparent; -webkit-text-stroke:3px #000; }
+    p { font-size:1.1rem; line-height:1.5; max-width:34ch; }
+    .btn { display:inline-flex; align-items:center; gap:.5rem; min-height:48px; padding:.7rem 1.25rem; font-weight:700; text-decoration:none;
+      background:var(--mint); color:#000; border:3px solid #000; box-shadow:6px 6px 0 #000; transition:transform .12s ease, box-shadow .12s ease; }
+    .btn:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 #000; }
+    .meta { font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.08em; opacity:.6; }
+    @media (prefers-reduced-motion: reduce) { .btn { transition:none; } }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <span class="tag">ERROR // 404</span>
+    <h1>4<span>0</span>4</h1>
+    <p>This page took a wrong turn. The system's fine — this link just isn't.</p>
+    <a class="btn" href="/">← Back to home</a>
+    <span class="meta">AMIT CHOUHAN · IT SUPPORT &amp; SYSTEMS SPECIALIST</span>
+  </main>
+</body>
+</html>

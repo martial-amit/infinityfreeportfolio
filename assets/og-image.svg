@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Amit Chouhan — IT Support & Systems Specialist">
+  <rect width="1200" height="630" fill="#F3EFE0"/>
+  <rect x="48" y="48" width="1104" height="534" fill="#FFFFFF" stroke="#000" stroke-width="8"/>
+  <rect x="92" y="92" width="470" height="48" fill="#7FEFBD" stroke="#000" stroke-width="5"/>
+  <text x="112" y="125" font-family="monospace" font-weight="700" font-size="22" fill="#000">// IT SUPPORT &amp; SYSTEMS</text>
+  <text x="84" y="295" font-family="sans-serif" font-weight="800" font-size="150" letter-spacing="-5" fill="#000">AMIT</text>
+  <text x="84" y="435" font-family="sans-serif" font-weight="800" font-size="150" letter-spacing="-5" fill="none" stroke="#000" stroke-width="3">CHOUHAN</text>
+  <rect x="92" y="472" width="772" height="46" fill="#7FEFBD"/>
+  <text x="104" y="505" font-family="sans-serif" font-weight="600" font-size="26" fill="#000">I keep systems running — and build the tools that run them.</text>
+  <text x="92" y="558" font-family="monospace" font-size="20" fill="#000">Ludhiana, India · IST · CCNA Certified · Available worldwide</text>
+</svg>
