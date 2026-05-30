@@ -259,7 +259,7 @@ body.nav-open .nav__panel { transform: translateX(0); }
 .nav__panel-foot .nb-btn { width: 100%; }
 .nav__panel-clock { font-size: .8rem; opacity: .7; }
 
-.nav__scrim { position: fixed; inset: 0; z-index: var(--z-content); background: rgba(0,0,0,.45); }
+.nav__scrim { position: fixed; inset: 0; z-index: var(--z-content); background: rgba(0,0,0,.45); display: none; }
 body.nav-open .nav__scrim { display: block; }
 
 /* ----------------------------------------------------------------------------

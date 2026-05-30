@@ -37,9 +37,10 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && body.classList.contains('nav-open')) close(); });
   })();
 
-  /* ---- SMOOTH SCROLL — Lenis driven by the GSAP ticker ------------------ */
+  /* ---- SMOOTH SCROLL — Lenis driven by the GSAP ticker (Desktop only) --- */
   var lenis = null;
-  if (!REDUCE && HAS_LENIS) {
+  var isMobile = window.innerWidth < 768 || window.matchMedia('(max-width: 767px)').matches;
+  if (!REDUCE && HAS_LENIS && !isMobile) {
     lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
     if (HAS_GSAP && HAS_ST) {
       window.gsap.registerPlugin(window.ScrollTrigger);
