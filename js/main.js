@@ -35,8 +35,34 @@
     var burger = document.getElementById('navBurger');
     var panel  = document.getElementById('navPanel');
     var scrim  = document.getElementById('navScrim');
-    function open()  { body.classList.add('nav-open');    if (burger) { burger.setAttribute('aria-expanded', 'true');  burger.setAttribute('aria-label', 'Close menu'); } if (panel) panel.setAttribute('aria-hidden', 'false'); if (scrim) scrim.hidden = false; }
-    function close() { body.classList.remove('nav-open'); if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu');  } if (panel) panel.setAttribute('aria-hidden', 'true');  if (scrim) scrim.hidden = true;  }
+    var scrollY = 0;
+
+    function lockScroll() {
+      scrollY = window.scrollY || window.pageYOffset || 0;
+      body.style.top = '-' + scrollY + 'px';
+    }
+
+    function unlockScroll() {
+      body.style.top = '';
+      window.scrollTo(0, scrollY);
+    }
+
+    function open() {
+      lockScroll();
+      body.classList.add('nav-open');
+      if (burger) { burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu'); }
+      if (panel) panel.setAttribute('aria-hidden', 'false');
+      if (scrim) scrim.hidden = false;
+    }
+
+    function close() {
+      body.classList.remove('nav-open');
+      if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); }
+      if (panel) panel.setAttribute('aria-hidden', 'true');
+      if (scrim) scrim.hidden = true;
+      unlockScroll();
+    }
+
     if (burger) burger.addEventListener('click', function () { body.classList.contains('nav-open') ? close() : open(); });
     if (scrim)  scrim.addEventListener('click', close);
     if (panel)  panel.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
@@ -130,7 +156,7 @@
 
     // Card groups — stagger up so hard shadows "snap" into place
     [['.pillars', '.pillar'], ['#services .cards-grid', '.service'],
-     ['.edu__list', '.edu__item'], ['.contact__direct', '.contact__btn'], ['.skills__groups', '.skill-group']
+     ['.edu__list', '.edu__item'], ['.skills__groups', '.skill-group']
     ].forEach(function (g) {
       gsap.utils.toArray(g[0]).forEach(function (c) {
         var items = c.querySelectorAll(g[1]);
@@ -138,6 +164,14 @@
         gsap.from(items, { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.7)', stagger: 0.09,
           scrollTrigger: { trigger: c, start: 'top 82%' } });
       });
+    });
+
+    // Contact links: opacity only — y-transform bleeds into “Let's Talk” below on mobile
+    gsap.utils.toArray('.contact__direct').forEach(function (c) {
+      var items = c.querySelectorAll('.contact__btn');
+      if (!items.length) return;
+      gsap.from(items, { opacity: 0, duration: 0.55, ease: 'power2.out', stagger: 0.09,
+        scrollTrigger: { trigger: c, start: 'top 82%' } });
     });
 
     // Timeline items
