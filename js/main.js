@@ -44,7 +44,7 @@
 
     function unlockScroll() {
       body.style.top = '';
-      window.scrollTo(0, scrollY);
+      (document.documentElement || document.body).scrollTo({ top: scrollY, behavior: 'auto' });
     }
 
     function open() {
@@ -96,8 +96,9 @@
       return;
     }
     if (HAS_ST) window.ScrollTrigger.refresh();
-    var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-    window.scrollTo({ top: Math.max(0, y), behavior: REDUCE ? 'auto' : 'smooth' });
+    var docEl = document.documentElement;
+    var y = target.getBoundingClientRect().top + (window.pageYOffset || docEl.scrollTop) - offset;
+    (docEl || document.body).scrollTo({ top: Math.max(0, y), behavior: REDUCE ? 'auto' : 'smooth' });
     if (HAS_ST) {
       window.setTimeout(function () { window.ScrollTrigger.refresh(); }, REDUCE ? 0 : 450);
     }
