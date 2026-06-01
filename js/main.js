@@ -141,6 +141,15 @@
 
   function initScrollMotion() {
     var gsap = window.gsap, ST = window.ScrollTrigger;
+    var mobile = MOBILE_MQ.matches;
+
+    initNavBehavior(gsap, ST);
+
+    // Scroll-linked transforms on mobile can trap scroll near Contact (iOS / hosted CDN)
+    if (mobile) {
+      bindScrollRefresh(ST);
+      return;
+    }
 
     // Numbered //labels + headings slide in with overshoot
     gsap.utils.toArray('.section-head:not(.section--about .section-head)').forEach(function (head) {
@@ -150,10 +159,10 @@
         scrollTrigger: { trigger: head, start: 'top 85%' } });
     });
 
-    // Big contact CTA
-    var cta = document.querySelector('.cta__title');
-    if (cta) gsap.from(cta, { yPercent: 30, opacity: 0, duration: 0.8, ease: 'back.out(1.5)',
-      scrollTrigger: { trigger: cta, start: 'top 85%' } });
+    // Contact CTA — opacity only (yPercent bleeds into form + breaks scroll height)
+    var cta = document.querySelector('.letstalk__cta .cta__title');
+    if (cta) gsap.from(cta, { opacity: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: cta, start: 'top 88%', once: true, invalidateOnRefresh: true } });
 
     // Card groups — stagger up so hard shadows "snap" into place
     [['.pillars', '.pillar'], ['#services .cards-grid', '.service'],
@@ -165,14 +174,6 @@
         gsap.from(items, { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.7)', stagger: 0.09,
           scrollTrigger: { trigger: c, start: 'top 82%' } });
       });
-    });
-
-    // Contact links: opacity only — y-transform bleeds into “Let's Talk” below on mobile
-    gsap.utils.toArray('.contact__direct').forEach(function (c) {
-      var items = c.querySelectorAll('.contact__btn');
-      if (!items.length) return;
-      gsap.from(items, { opacity: 0, duration: 0.55, ease: 'power2.out', stagger: 0.09,
-        scrollTrigger: { trigger: c, start: 'top 82%' } });
     });
 
     // Timeline items
@@ -197,10 +198,10 @@
     if (ptrack) gsap.from(ptrack.children, { y: 30, opacity: 0, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.06,
       scrollTrigger: { trigger: '#work', start: 'top 78%' } });
 
-    // Contact form
+    // Contact form — opacity only (same scroll-trap fix as buttons / CTA)
     var cform = document.getElementById('contactForm');
-    if (cform) gsap.from(cform, { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.6)',
-      scrollTrigger: { trigger: cform, start: 'top 82%', invalidateOnRefresh: true } });
+    if (cform) gsap.from(cform, { opacity: 0, duration: 0.55, ease: 'power2.out',
+      scrollTrigger: { trigger: cform, start: 'top 88%', once: true, invalidateOnRefresh: true } });
 
     // COUNT-UP numbers (About stats + skill %)
     gsap.utils.toArray('.js-count').forEach(function (el) {
@@ -241,10 +242,15 @@
       }
     }
 
-    initNavBehavior(gsap, ST);
+    bindScrollRefresh(ST);
+  }
 
+  function bindScrollRefresh(ST) {
     ST.refresh();
     window.addEventListener('load', function () { ST.refresh(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ST.refresh(); });
+    }
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);

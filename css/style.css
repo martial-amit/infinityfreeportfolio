@@ -65,7 +65,7 @@
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: hidden; overflow-y: scroll; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-padding-top: calc(var(--nav-h) + 1rem); } }
-body { min-height: 100dvh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { min-height: 100dvh; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; overflow-y: auto; }
 body.nav-open {
   overflow: hidden;
   touch-action: none;
@@ -734,15 +734,40 @@ body.nav-open #main { pointer-events: none; user-select: none; }
 }
 
 /* ----------------------------------------------------------------------------
-   15. CONTACT (//10)
+   15. LET'S TALK (//07)
    -------------------------------------------------------------------------- */
-.section--contact { background: var(--cream-2); border-top: var(--border); }
-#contact { scroll-margin-top: calc(var(--nav-h) + 1rem); }
+.section--letstalk { background: var(--cream-2); border-block: var(--border); }
 #letstalk { scroll-margin-top: calc(var(--nav-h) + 1rem); }
-.contact__message { display: grid; gap: 1.25rem; align-content: start; min-width: 0; }
-.contact__message-head { display: grid; gap: .35rem; }
-.contact__message-title { font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 700; letter-spacing: -.02em; margin: 0; }
-.contact__cta { margin-bottom: 0; }
+
+.letstalk__grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+.letstalk__copy {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-content: start;
+  min-width: 0;
+}
+.letstalk__head { margin-bottom: 0; max-width: none; }
+.letstalk__form { min-width: 0; width: 100%; }
+.letstalk__cta { margin-bottom: 0; }
+.letstalk__cta .cta__title { font-size: clamp(2.25rem, 10vw, 6rem); }
+
+@media (min-width: 768px) {
+  .letstalk__grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(2.5rem, 6vw, 5.5rem);
+    row-gap: 2rem;
+  }
+  .letstalk__copy { padding-right: clamp(0.5rem, 2vw, 1.5rem); }
+  .letstalk__cta .cta__title { font-size: clamp(2.5rem, 5.5vw, 7.5rem); }
+}
+
+@media (min-width: 900px) {
+  .letstalk__grid { grid-template-columns: 1.05fr 1fr; }
+}
 
 /* Editorial CTA */
 .cta { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
@@ -753,32 +778,7 @@ body.nav-open #main { pointer-events: none; user-select: none; }
 .cta__dot { width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--mint); border: 2px solid var(--black); }
 .cta__avail { display: inline-flex; align-items: center; gap: .5rem; opacity: .7; }
 
-/* Two-column grid */
-.contact__grid { display: grid; gap: 1.5rem; }
-
-/* LEFT — direct contact buttons */
-.contact__direct {
-  display: grid; gap: 1rem; align-content: start;
-  /* Box-shadow + scroll-motion transforms paint outside the border box */
-  padding-bottom: 6px;
-}
-.contact__btn {
-  display: flex; align-items: center; gap: 1rem; color: var(--black);
-  background: var(--white); border: var(--border); box-shadow: var(--shadow); border-radius: var(--radius);
-  padding: .9rem 1.1rem; transition: transform .12s ease, box-shadow .12s ease;
-}
-.contact__direct .contact__btn:last-child { margin-bottom: 6px; }
-@media (hover: hover) { .contact__btn:not(.contact__btn--static):hover { transform: translate(2px,2px); box-shadow: var(--shadow-press); } }
-.contact__btn:not(.contact__btn--static):active { transform: translate(4px,4px); box-shadow: 0 0 0 var(--black); }
-.contact__btn-ico { width: 48px; height: 48px; flex: none; display: grid; place-items: center; background: var(--mint); border: var(--border); }
-.contact__btn-ico svg { width: 24px; height: 24px; }
-.contact__btn-text { display: grid; gap: .1rem; margin-right: auto; min-width: 0; }
-.contact__btn-kicker { font-size: .66rem; font-weight: 700; letter-spacing: .12em; opacity: .6; }
-.contact__btn-value { font-weight: 700; font-size: 1.02rem; word-break: break-word; }
-.contact__btn-arrow { flex: none; font-size: 1.1rem; font-weight: 700; }
-.contact__btn--static { background: var(--cream); }
-
-/* RIGHT — form */
+/* Let's Talk form */
 .contact__form { display: grid; gap: 1.1rem; background: var(--white); align-content: start; }
 .field { display: grid; gap: .4rem; }
 .field__label { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
@@ -821,11 +821,6 @@ textarea.field__input { resize: vertical; min-height: 120px; }
   .cards-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Tablet — use the extra width before the full desktop layout kicks in */
-@media (min-width: 768px) {
-  .contact__grid { grid-template-columns: 1fr 1.05fr; align-items: start; }
-}
-
 @media (min-width: 900px) {
   .nav__links { display: flex; }
   .nav__clock { display: inline-flex; }
@@ -839,9 +834,10 @@ textarea.field__input { resize: vertical; min-height: 120px; }
   }
 
   .about__grid {
-    grid-template-columns: 1fr 1.15fr;
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 1.15fr);
     min-height: calc(100vh - var(--nav-h));
     align-items: stretch;
+    gap: 0;
   }
 
   .about__image-container {
@@ -850,7 +846,7 @@ textarea.field__input { resize: vertical; min-height: 120px; }
     height: calc(100vh - var(--nav-h));
     border-right: var(--border);
     border-bottom: none;
-    padding: var(--space-12) var(--gutter);
+    padding: var(--space-12) clamp(2rem, 5vw, 4rem);
   }
 
   .about__img {
@@ -860,14 +856,13 @@ textarea.field__input { resize: vertical; min-height: 120px; }
   }
 
   .about__content {
-    padding: var(--space-12) var(--gutter);
+    padding: var(--space-12) clamp(2rem, 5vw, 4rem);
     align-content: center;
     gap: var(--space-8);
   }
   .cards-grid { grid-template-columns: repeat(3, 1fr); }
   .pillars { grid-template-columns: repeat(3, 1fr); }
   .skills__groups { grid-template-columns: repeat(3, 1fr); align-items: start; }
-  .contact__grid { grid-template-columns: 1fr 1.05fr; align-items: start; }
   .hero__inner { gap: 1.75rem; }
 }
 
@@ -877,23 +872,11 @@ textarea.field__input { resize: vertical; min-height: 120px; }
 
 /* Mobile Overrides (Phone & Portrait Tablets) */
 @media (max-width: 767px) {
-  .section--contact {
+  .section--letstalk {
     padding-bottom: max(3rem, env(safe-area-inset-bottom, 0px));
   }
 
-  .contact__grid {
-    gap: 2.75rem;
-  }
-
-  .contact__direct {
-    padding-bottom: var(--space-4);
-  }
-
-  .contact__direct .contact__btn:last-child {
-    margin-bottom: 0;
-  }
-
-  .contact__cta .cta__title {
+  .letstalk__cta .cta__title {
     font-size: clamp(1.75rem, 9vw, 3rem);
   }
 }
@@ -1001,25 +984,6 @@ textarea.field__input { resize: vertical; min-height: 120px; }
     gap: 0.6rem;
   }
 
-  .contact__btn {
-    padding: 0.75rem 0.9rem;
-    gap: 0.75rem;
-  }
-
-  .contact__btn-ico {
-    width: 38px;
-    height: 38px;
-  }
-
-  .contact__btn-ico svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .contact__btn-value {
-    font-size: 0.9rem;
-  }
-
   .contact__form {
     padding: 1.1rem;
     gap: 0.9rem;
@@ -1098,12 +1062,5 @@ body.dark .project__pills li { background: var(--surface); color: var(--ink); }
 body.dark .edu__cert { color: var(--black); }
 body.dark .edu__cert-code { color: var(--black); background: var(--bg); }
 
-body.dark .contact__btn:not(.contact__btn--static) { color: var(--ink); }
-body.dark .contact__btn--static { color: var(--ink); }
-
 body.dark .field__input { background: var(--bg); color: var(--ink); border-color: var(--black); }
 body.dark .field__input:focus-visible { background: var(--surface); }
-
-/* SVG icons inside contacts need light/dark swap */
-body.dark .contact__btn svg { color: var(--ink); }
-body.dark .contact__btn-ico svg { color: var(--black); }
