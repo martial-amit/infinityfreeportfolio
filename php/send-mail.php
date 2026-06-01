@@ -29,8 +29,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-/* ---- Honeypot: real users never fill the hidden "company" field -------- */
-if (!empty($_POST['company'])) {
+/* ---- Honeypot: real users never fill the hidden "_honey" field --------- */
+if (!empty($_POST['_honey'])) {
     // Pretend success so bots don't retry — but send nothing.
     echo json_encode(['success' => true, 'message' => 'Thanks! Your message has been sent.']);
     exit;

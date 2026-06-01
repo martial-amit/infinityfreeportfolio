@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Amit Chouhan — IT Support & Systems Specialist. I keep systems running, and build the tools that run them. Ludhiana, India. CCNA certified. Available worldwide / remote." />
-  <meta name="theme-color" content="#F3EFE0" />
+  <meta name="description" content="Amit Chouhan — IT systems specialist and custom software developer. AI-assisted web apps, SaaS, and reliable infrastructure. Ludhiana, India. CCNA certified. Remote worldwide." />
+  <meta name="theme-color" content="#F3EFE0" id="themeColorMeta" />
+  <!-- Optional: set your live site URL for social crawlers (no trailing slash). Leave empty to auto-detect in browser. -->
+  <meta name="site-base" content="" />
+  <link rel="canonical" href="" id="canonicalUrl" />
 
-  <title>Amit Chouhan — IT Support &amp; Systems Specialist</title>
+  <title>Amit Chouhan — IT Systems &amp; Software Development</title>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Amit Chouhan — IT Support & Systems Specialist" />
-  <meta property="og:description" content="IT Support & Systems Specialist with 2.5+ years across financial and marketing-tech environments — Windows/Linux, networking, Active Directory, NAS, and rapid custom-tool development. CCNA certified." />
+  <meta property="og:title" content="Amit Chouhan — IT Systems & Software Development" />
+  <meta property="og:description" content="IT systems, custom software, and AI-assisted web development — plus 2.5+ years of hands-on infrastructure and support. CCNA certified. Based in Ludhiana, available remote." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Amit Chouhan" />
   <meta property="og:locale" content="en_US" />
-  <!-- TODO: set og:url to your live absolute URL after deploy -->
-  <meta property="og:url" content="https://example.com/" />
-  <meta property="og:image" content="assets/og-image.svg" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Amit Chouhan — IT Support & Systems Specialist" />
+  <meta property="og:image:alt" content="Amit Chouhan — IT Systems & Software Development" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Amit Chouhan — IT Support & Systems Specialist" />
-  <meta name="twitter:description" content="I keep systems running — and build the tools that run them." />
-  <meta name="twitter:image" content="assets/og-image.svg" />
+  <meta name="twitter:title" content="Amit Chouhan — IT Systems & Software Development" />
+  <meta name="twitter:description" content="Custom software, reliable IT systems, and AI-assisted development." />
+  <meta name="twitter:image" content="" />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
@@ -37,17 +39,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css" />
 
   <!-- Site styles -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=20260602" />
 
-  <!-- Three.js (ES module, no build step) -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-    }
-  }
-  </script>
+  <script src="js/site-config.js?v=20260602"></script>
 
   <!-- JSON-LD Person schema -->
   <script type="application/ld+json">
@@ -55,8 +49,8 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Amit Chouhan",
-    "jobTitle": "IT Support & Systems Specialist",
-    "description": "IT Support & Systems Specialist with 2.5+ years delivering end-to-end IT support across financial and marketing-tech environments — Windows/Linux, networking, Active Directory, NAS, and rapid custom-tool development. CCNA certified.",
+    "jobTitle": "IT Systems & Software Development Specialist",
+    "description": "IT systems specialist and custom software developer with 2.5+ years across financial and marketing-tech — infrastructure, support, and AI-assisted web/SaaS delivery. CCNA certified.",
     "email": "mailto:martialamit5@gmail.com",
     "image": "assets/og-image.svg",
     "address": { "@type": "PostalAddress", "addressLocality": "Ludhiana", "addressRegion": "Punjab", "addressCountry": "IN" },
@@ -64,7 +58,7 @@
     "worksFor": { "@type": "Organization", "name": "Samvestor Marketing Private Limited" },
     "alumniOf": { "@type": "CollegeOrUniversity", "name": "Gujranwala Guru Nanak Institute of Management & Technology" },
     "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "certificate", "name": "Cisco Certified Network Associate (CCNA 200-301)" },
-    "sameAs": ["http://www.linkedin.com/in/martialamit", "https://github.com/martial-amit"]
+    "sameAs": ["https://www.linkedin.com/in/martialamit", "https://github.com/martial-amit"]
   }
   </script>
 </head>
@@ -73,9 +67,10 @@
   <script>
     (function () {
       var theme = localStorage.getItem('theme');
-      if (theme === 'dark') {
-        document.body.classList.add('dark');
-      }
+      var dark = theme === 'dark';
+      if (dark) document.body.classList.add('dark');
+      var tc = document.getElementById('themeColorMeta');
+      if (tc) tc.setAttribute('content', dark ? '#121212' : '#F3EFE0');
     })();
   </script>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -100,10 +95,12 @@
       <a class="nav__logo" href="#about" aria-label="Amit Chouhan — home">Amit&nbsp;Chouhan</a>
 
       <nav class="nav__links" aria-label="Primary">
-        <a class="nav__link" href="#about">About</a>
-        <a class="nav__link" href="#work">Work</a>
-        <a class="nav__link" href="#skills">Skills</a>
-        <a class="nav__link" href="#education">Education</a>
+        <a class="nav__link nav__anchor" href="#about">About</a>
+        <a class="nav__link nav__anchor" href="#work">Work</a>
+        <a class="nav__link nav__anchor" href="#skills">Skills</a>
+        <a class="nav__link nav__anchor" href="#experience">Experience</a>
+        <a class="nav__link nav__anchor" href="#services">Services</a>
+        <a class="nav__link nav__anchor" href="#education">Education</a>
       </nav>
 
       <div class="nav__right">
@@ -111,7 +108,7 @@
           <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:20px;height:20px;margin:auto;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:20px;height:20px;margin:auto;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
-        <a class="nb-btn nb-btn--mint nb-press nav__cta" href="#letstalk">Let's talk</a>
+        <a class="nb-btn nb-btn--mint nb-press nav__cta nav__anchor" href="#letstalk">Let's talk</a>
         <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
           <span></span><span></span><span></span>
         </button>
@@ -121,14 +118,14 @@
     <!-- Mobile slide-in panel -->
     <div class="nav__panel" id="navPanel" aria-hidden="true">
       <nav class="nav__panel-links" aria-label="Mobile">
-        <a class="nav__panel-link" href="#about"><span class="mono">01</span> About</a>
-        <a class="nav__panel-link" href="#work"><span class="mono">02</span> Work</a>
-        <a class="nav__panel-link" href="#skills"><span class="mono">03</span> Skills</a>
-        <a class="nav__panel-link" href="#education"><span class="mono">04</span> Education</a>
+        <a class="nav__panel-link nav__anchor" href="#about"><span class="mono">01</span> About</a>
+        <a class="nav__panel-link nav__anchor" href="#work"><span class="mono">02</span> Work</a>
+        <a class="nav__panel-link nav__anchor" href="#skills"><span class="mono">03</span> Skills</a>
+        <a class="nav__panel-link nav__anchor" href="#experience"><span class="mono">04</span> Experience</a>
+        <a class="nav__panel-link nav__anchor" href="#services"><span class="mono">05</span> Services</a>
+        <a class="nav__panel-link nav__anchor" href="#education"><span class="mono">06</span> Education</a>
+        <a class="nav__panel-link nav__anchor" href="#letstalk"><span class="mono">07</span> Let's talk</a>
       </nav>
-      <div class="nav__panel-foot">
-        <a class="nb-btn nb-btn--mint nb-press" href="#letstalk">Let's talk</a>
-      </div>
     </div>
   </header>
   <div class="nav__scrim" id="navScrim" hidden></div>
@@ -196,7 +193,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //02 · WHAT I DO                                              -->
+    <!-- //01 · WHAT I DO                                              -->
     <!-- ============================================================= -->
     <section class="section section--alt" id="capabilities">
       <div class="container">
@@ -289,7 +286,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //03 · EXPERIENCE                                             -->
+    <!-- //02 · EXPERIENCE                                             -->
     <!-- ============================================================= -->
     <section class="section" id="experience">
       <div class="container">
@@ -340,7 +337,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //04 · PROJECTS (WORK)                                        -->
+    <!-- //03 · PROJECTS (WORK)                                        -->
     <!-- ============================================================= -->
     <section class="section section--alt" id="work">
       <div class="container">
@@ -433,7 +430,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //05 · SKILLS                                                 -->
+    <!-- //04 · SKILLS                                                 -->
     <!-- ============================================================= -->
     <section class="section" id="skills">
       <div class="container">
@@ -533,7 +530,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //06 · SERVICES                                               -->
+    <!-- //05 · SERVICES                                               -->
     <!-- ============================================================= -->
     <section class="section section--alt" id="services">
       <div class="container">
@@ -592,7 +589,7 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- //06 · EDUCATION & CERTIFICATIONS                             -->
+    <!-- //06 · EDUCATION                                              -->
     <!-- ============================================================= -->
     <section class="section" id="education">
       <div class="container">
@@ -653,6 +650,8 @@
 
           <form class="contact__form nb-card letstalk__form" id="contactForm" action="https://formsubmit.co/ajax/martialamit5@gmail.com" method="post" novalidate>
             <input type="hidden" name="_subject" value="New message from portfolio!" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
             <div class="field">
               <label class="field__label mono" for="cf-name">Name</label>
               <input class="field__input" type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name" placeholder="Your name" />
@@ -683,7 +682,7 @@
         <a class="footer__top nb-btn nb-btn--mint nb-press" href="#about" aria-label="Back to top">↑ Back to top</a>
         <nav class="footer__socials" aria-label="Social and contact links">
           <a href="mailto:martialamit5@gmail.com">Email</a>
-          <a href="http://www.linkedin.com/in/martialamit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="https://www.linkedin.com/in/martialamit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           <a href="https://github.com/martial-amit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </nav>
       </div>
@@ -700,6 +699,6 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script defer src="js/main.js"></script>
+  <script defer src="js/main.js?v=20260602"></script>
 </body>
 </html>
