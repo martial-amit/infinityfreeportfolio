@@ -12,7 +12,13 @@
   var HAS_GSAP  = typeof window.gsap !== 'undefined';
   var HAS_ST    = typeof window.ScrollTrigger !== 'undefined';
   var HAS_LENIS = typeof window.Lenis === 'function';
+  var MOBILE_MQ = window.matchMedia('(max-width: 767px)');
+  var isMobile  = MOBILE_MQ.matches;
   var body = document.body;
+
+  if (HAS_ST) {
+    window.ScrollTrigger.config({ ignoreMobileResize: true });
+  }
 
   /* ---- LIVE CLOCK (Ludhiana / IST, every second) ------------------------ */
   (function () {
@@ -39,7 +45,6 @@
 
   /* ---- SMOOTH SCROLL — Lenis driven by the GSAP ticker (Desktop only) --- */
   var lenis = null;
-  var isMobile = window.innerWidth < 768 || window.matchMedia('(max-width: 767px)').matches;
   if (!REDUCE && HAS_LENIS && !isMobile) {
     lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
     if (HAS_GSAP && HAS_ST) {
@@ -56,6 +61,21 @@
 
   /* ---- ANCHOR SMOOTH SCROLL --------------------------------------------- */
   var NAV_OFFSET = 80;
+  function scrollToAnchor(target, hash) {
+    if (!target) return;
+    var offset = NAV_OFFSET;
+    if (hash === '#letstalk') offset = NAV_OFFSET + 8;
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -offset });
+      return;
+    }
+    if (HAS_ST) window.ScrollTrigger.refresh();
+    var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: Math.max(0, y), behavior: REDUCE ? 'auto' : 'smooth' });
+    if (HAS_ST) {
+      window.setTimeout(function () { window.ScrollTrigger.refresh(); }, REDUCE ? 0 : 450);
+    }
+  }
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       var id = link.getAttribute('href');
@@ -63,8 +83,7 @@
       var target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      if (lenis) lenis.scrollTo(target, { offset: -NAV_OFFSET });
-      else { var y = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET; window.scrollTo({ top: y, behavior: REDUCE ? 'auto' : 'smooth' }); }
+      scrollToAnchor(target, id);
     });
   });
 
@@ -146,7 +165,7 @@
     // Contact form
     var cform = document.getElementById('contactForm');
     if (cform) gsap.from(cform, { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.6)',
-      scrollTrigger: { trigger: cform, start: 'top 82%' } });
+      scrollTrigger: { trigger: cform, start: 'top 82%', invalidateOnRefresh: true } });
 
     // COUNT-UP numbers (About stats + skill %)
     gsap.utils.toArray('.js-count').forEach(function (el) {
@@ -169,26 +188,36 @@
         scrollTrigger: { trigger: fill, start: 'top 94%', once: true } });
     });
 
-    // Parallax profile photo scrolling
-    var pimg = document.querySelector('.js-parallax-img');
-    if (pimg) {
-      gsap.fromTo(pimg, 
-        { yPercent: -12 }, 
-        { yPercent: 12, ease: 'none',
-          scrollTrigger: {
-            trigger: '.about__image-container',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 0.3
+    // Parallax profile photo — desktop only (scrub parallax can break mobile scroll height)
+    if (!isMobile) {
+      var pimg = document.querySelector('.js-parallax-img');
+      if (pimg) {
+        gsap.fromTo(pimg,
+          { yPercent: -12 },
+          { yPercent: 12, ease: 'none',
+            scrollTrigger: {
+              trigger: '.about__image-container',
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.3
+            }
           }
-        }
-      );
+        );
+      }
     }
 
     initNavBehavior(gsap, ST);
 
     ST.refresh();
     window.addEventListener('load', function () { ST.refresh(); });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () { ST.refresh(); }, 200);
+    });
+    if (MOBILE_MQ.addEventListener) {
+      MOBILE_MQ.addEventListener('change', function () { ST.refresh(); });
+    }
   }
 
   /* ---- NAV: hide on scroll-down / show on scroll-up · progress · active -- */
