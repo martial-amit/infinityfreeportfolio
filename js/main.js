@@ -23,7 +23,11 @@
   }
 
   /* ---- MOBILE NAV ------------------------------------------------------- */
-  var mobileNav = { lockedY: 0, close: function () {} };
+  var mobileNav = {
+    lockedY: 0,
+    close: function () {},
+    unlockAndScroll: function () {}
+  };
 
   (function () {
     var burger = document.getElementById('navBurger');
@@ -40,11 +44,11 @@
 
     function setInert(on) {
       if (mainEl) {
-        if (on && mainEl.setAttribute) mainEl.setAttribute('inert', '');
+        if (on) mainEl.setAttribute('inert', '');
         else mainEl.removeAttribute('inert');
       }
       if (footerEl) {
-        if (on && footerEl.setAttribute) footerEl.setAttribute('inert', '');
+        if (on) footerEl.setAttribute('inert', '');
         else footerEl.removeAttribute('inert');
       }
     }
@@ -57,7 +61,7 @@
     function unlockScroll(restoreY) {
       body.style.top = '';
       var y = typeof restoreY === 'number' ? restoreY : mobileNav.lockedY;
-      (document.documentElement || document.body).scrollTo({ top: y, behavior: 'auto' });
+      window.scrollTo(0, y);
     }
 
     function setOpenState(isOpen) {
@@ -83,15 +87,29 @@
       setOpenState(true);
     }
 
-    function close(skipRestore) {
+    function close() {
       if (!body.classList.contains('nav-open')) return;
       body.classList.remove('nav-open');
       setOpenState(false);
-      if (skipRestore) body.style.top = '';
-      else unlockScroll();
+      unlockScroll();
+    }
+
+    /** Close menu + restore document scroll, then jump to a section (mobile anchors). */
+    function unlockAndScroll(targetY) {
+      body.classList.remove('nav-open');
+      body.style.top = '';
+      setOpenState(false);
+      var behavior = REDUCE ? 'auto' : 'smooth';
+      requestAnimationFrame(function () {
+        window.scrollTo({ top: Math.max(0, targetY), behavior: behavior });
+        if (HAS_ST) {
+          window.setTimeout(function () { window.ScrollTrigger.refresh(); }, REDUCE ? 0 : 450);
+        }
+      });
     }
 
     mobileNav.close = close;
+    mobileNav.unlockAndScroll = unlockAndScroll;
 
     if (burger) {
       burger.addEventListener('click', function () {
@@ -157,40 +175,39 @@
   /* ---- ANCHOR SCROLL ---------------------------------------------------- */
   var NAV_OFFSET = 80;
 
+  function getTargetScrollY(target, offset) {
+    var y = 0;
+    var node = target;
+    while (node) {
+      y += node.offsetTop || 0;
+      node = node.offsetParent;
+    }
+    return Math.max(0, y - offset);
+  }
+
   function scrollToAnchor(target, hash) {
     if (!target) return;
     var offset = NAV_OFFSET;
     if (hash === '#letstalk') offset = NAV_OFFSET + 8;
-    var menuWasOpen = body.classList.contains('nav-open');
-    var lockedY = mobileNav.lockedY;
+    var targetY = getTargetScrollY(target, offset);
 
-    if (menuWasOpen) mobileNav.close(true);
-
-    function runScroll() {
-      if (lenis) {
-        lenis.scrollTo(target, { offset: -offset });
-        return;
-      }
-      if (HAS_ST) window.ScrollTrigger.refresh();
-      var docEl = document.documentElement;
-      if (menuWasOpen) {
-        (docEl || document.body).scrollTo({ top: lockedY, behavior: 'auto' });
-      }
-      var base = window.pageYOffset || docEl.scrollTop;
-      var y = target.getBoundingClientRect().top + base - offset;
-      (docEl || document.body).scrollTo({
-        top: Math.max(0, y),
-        behavior: REDUCE ? 'auto' : 'smooth'
-      });
-      if (HAS_ST) {
-        window.setTimeout(function () { window.ScrollTrigger.refresh(); }, REDUCE ? 0 : 450);
-      }
+    if (body.classList.contains('nav-open')) {
+      mobileNav.unlockAndScroll(targetY);
+      return;
     }
 
-    if (menuWasOpen) {
-      requestAnimationFrame(function () { requestAnimationFrame(runScroll); });
-    } else {
-      runScroll();
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -offset });
+      return;
+    }
+
+    if (HAS_ST) window.ScrollTrigger.refresh();
+    window.scrollTo({
+      top: targetY,
+      behavior: REDUCE ? 'auto' : 'smooth'
+    });
+    if (HAS_ST) {
+      window.setTimeout(function () { window.ScrollTrigger.refresh(); }, REDUCE ? 0 : 450);
     }
   }
 

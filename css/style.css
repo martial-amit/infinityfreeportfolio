@@ -747,6 +747,13 @@ body.nav-open #main { pointer-events: none; user-select: none; }
    15. LET'S TALK (//07)
    -------------------------------------------------------------------------- */
 .section--letstalk { background: var(--cream-2); border-block: var(--border); }
+#about,
+#capabilities,
+#experience,
+#work,
+#skills,
+#services,
+#education,
 #letstalk { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 
 .letstalk__grid {
